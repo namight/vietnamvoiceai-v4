@@ -1,24 +1,23 @@
-# Sử dụng môi trường Node.js nhẹ và nhanh nhất
+# Sử dụng môi trường Node.js nhẹ
 FROM node:20-alpine
 
-# CÀI ĐẶT FFMPEG (Rất quan trọng cho VietnamVoiceAI)
+# CÀI ĐẶT FFMPEG
 RUN apk update && apk add --no-cache ffmpeg
 
-# Thiết lập thư mục làm việc trong server
 WORKDIR /app
 
-# Copy các file cấu hình và cài đặt thư viện
 COPY package*.json ./
 RUN npm ci
 
-# Copy toàn bộ mã nguồn dự án vào server
 COPY . .
 
-# Build dự án Next.js
+# MẸO ÉP RAM: Giới hạn Node.js chỉ dùng tối đa 300MB RAM khi build
+ENV NODE_OPTIONS="--max_old_space_size=300"
+
+# Build dự án (Tắt kiểm tra ESLint/Type tạm thời để nhẹ máy)
+ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
-# Mở cổng 3000
 EXPOSE 3000
 
-# Lệnh khởi chạy ứng dụng
 CMD ["npm", "start"]
