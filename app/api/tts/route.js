@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 import os from 'os'; // Thêm thư viện nhận diện hệ điều hành
-import { generateAudioChunk } from '@/lib/tts-engine';
-import { extractTextFromFile } from '@/lib/doc-processor';
+import { generateAudioChunk } from '../../../lib/tts-engine';
+import { extractTextFromFile } from '../../../lib/doc-processor';
 
 // Thư mục tạm tương thích với mọi hệ điều hành (Windows, Linux, MacOS, Vercel)
 const TEMP_DIR = os.tmpdir();
