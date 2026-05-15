@@ -7,21 +7,15 @@ import AudioPlayer from '../components/AudioPlayer';
 import { Moon, Sun, Sparkles } from 'lucide-react';
 
 export default function Home() {
-  // 1. Chỉnh mặc định thành 'light' (Giao diện sáng)
   const [theme, setTheme] = useState('light');
-  
-  // 2. Chỉnh giọng đọc mặc định thành 'nam-minh' (Giọng Nam)
   const [voice, setVoice] = useState('nam-minh');
-  
   const [rate, setRate] = useState('1.0');
-  const [pause, setPause] = useState('1.0');
+  const [pause, setPause] = useState('1.0'); // Tham số ngắt nghỉ
   const [text, setText] = useState('');
   const [file, setFile] = useState(null);
   
   const [audioUrl, setAudioUrl] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
-  // Xóa phần useEffect tự động nhận diện nền tối của máy tính để luôn ưu tiên Light Mode.
 
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
@@ -39,6 +33,8 @@ export default function Home() {
     const formData = new FormData();
     formData.append('voice', voice);
     formData.append('rate', rate);
+    formData.append('pause', pause); // ĐÃ BỔ SUNG: Gửi tham số ngắt nghỉ xuống API
+    
     if (text) formData.append('text', text);
     if (file) formData.append('file', file);
 
